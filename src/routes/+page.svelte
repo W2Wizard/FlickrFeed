@@ -5,9 +5,10 @@
 	const { data } = $props();
 
 	/** Search for a feed */
-	async function search(query: string) {
+	async function search(query: string, language = 'en-us') {
 		const params = new URLSearchParams();
 		query.split(' ').forEach((filter) => params.append('q', filter.trim()));
+		params.append('lang', language);
 
 		// NOTE(W2): Use goto to avoid invalidation and pushState
 		goto(`/?${params.toString()}`, {
@@ -22,10 +23,20 @@
 		role="search"
 		onsubmit={(e) => {
 			e.preventDefault(); // Svelte 5 removed piplines (workaround is there tho)
-			search(e.currentTarget.search.value);
+			search(e.currentTarget.search.value, e.currentTarget.language.value);
 		}}
 	>
 		<input class="wui" type="text" spellcheck="false" name="search" placeholder="Search..." />
+		<select class="wui" name="language">
+			<option value="de-de">German</option>
+			<option value="en-us">English</option>
+			<option value="es-us">Spanish</option>
+			<option value="fr-fr">French</option>
+			<option value="it-it">Italian</option>
+			<option value="ko-kr">Korean</option>
+			<option value="pt-br">Portuguese (Brazilian)</option>
+			<option value="zh-hk">Traditional Chinese (Hong Kong)</option>
+		</select>
 		<button class="wui button" type="submit"> Search </button>
 	</form>
 </header>
@@ -54,13 +65,13 @@
 		display: grid;
 		background-color: var(--wui-header);
 		width: 100%;
-		height: var(--wui-header-height);
-		padding-inline: 1rem;
+		min-height: var(--wui-header-height);
+		padding: 0.5rem 1rem;
 	}
 
 	main {
 		--main-padding: 1rem;
-		padding: var(--main-padding);
+		padding: 0 var(--main-padding);
 	}
 
 	.graph {

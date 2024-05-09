@@ -27,12 +27,14 @@ async function httpFetch(url: string, curl: typeof fetch, init?: RequestInit) {
 // =============================================================================
 
 export const load: PageServerLoad = async (event) => {
+	const lang = event.url.searchParams.get('lang') || 'en-us';
 	const filters = event.url.searchParams.getAll('q');
 	const params = new URLSearchParams({
 		format: 'json',
 		nojsoncallback: '1', // Undocumented, but it prevents the JSONP callback
 		tagmode: 'any', // "all"
-		tags: `[${filters.join(',')}]`
+		tags: `[${filters.join(',')}]`,
+		lang: lang
 	});
 
 	const url = `https://www.flickr.com/services/feeds/photos_public.gne?${params}`;

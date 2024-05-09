@@ -24,6 +24,7 @@ input.wui, select.wui, textarea.wui {
 	border: 1px solid var(--wui-border);
 	background-color: var(--wui-shade-01);
 	font-size: 0.8rem;
+	height: 100%;
 
 	&:is(textarea) {
 		border-radius: 0;
@@ -102,4 +103,9 @@ article {
 	height: fit-content;
 	min-width: 256px;
 	width: 100%;
+
+	& p {
+		overflow: hidden;
+    text-overflow: ellipsis;
+	}
 }
