@@ -41,7 +41,7 @@
 	--wui-text-05: hsl(240, 8%, 90%);
 
 	--wui-radius: 0.5rem;
-	--wui-header-height: 4rem;
+	--wui-header-height: 2rem;
 	--wui-border: hsl(0, 0%, 77%);
 
 	--wui-primary: hsla(16, 100%, 50%, 1);
@@ -93,10 +93,17 @@ form .group {
 	grid-template-columns: 1fr 1fr;
 	gap: 0.5rem;
 
-	/* SET width: -webkit-fill-available; for all children */
-
 	& label > * {
 		width: 100%;
+	}
+}
+
+a {
+	color: var(--wui-primary);
+	text-decoration: none;
+
+	&:hover {
+		text-decoration: underline;
 	}
 }
 

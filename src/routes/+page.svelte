@@ -60,11 +60,13 @@
 
 	main {
 		--main-padding: 1rem;
-		padding-inline: var(--main-padding);
+		padding: var(--main-padding);
 	}
 
 	.graph {
+		padding: 8px;
 		display: grid;
+		gap: 1rem;
 		grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 		border-radius: var(--wui-radius);
 		min-height: calc(100dvh - var(--main-padding) - var(--wui-header-height));
