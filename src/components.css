@@ -105,7 +105,9 @@ article {
 	width: 100%;
 
 	& p {
-		overflow: hidden;
+		overflow-x: hidden;
     text-overflow: ellipsis;
+		max-height: 256px;
+		overflow-y: auto;
 	}
 }
