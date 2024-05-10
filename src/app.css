@@ -1,3 +1,8 @@
+/*=============================================================================
+// Copyright (c) 2024 - W2Wizard
+// See README in the root of this project for more information.
+==============================================================================*/
+
 @import "./reset.css";
 @import "./components.css";
 
@@ -116,7 +121,6 @@ img {
 	background-size: cover;
 	shape-margin: 1rem;
 	border-radius: 0.5rem;
-	border: 1px solid var(--wui-border);
 }
 
 .center {

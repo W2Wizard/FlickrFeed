@@ -1,19 +1,21 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
-	import Loading from '$lib/loading.svelte';
+	import { goto } from "$app/navigation";
+	import Loading from "$lib/loading.svelte";
+	import Post from "$lib/post.svelte";
 
 	const { data } = $props();
 
 	/** Search for a feed */
-	async function search(query: string, language = 'en-us') {
+	async function search(query: string, language = "en-us") {
 		const params = new URLSearchParams();
-		query.split(' ').forEach((filter) => params.append('q', filter.trim()));
-		params.append('lang', language);
+		if (query.length > 0)
+			query.split(" ").forEach((filter) => params.append("q", filter.trim()));
+		//params.append("lang", language);
 
 		// NOTE(W2): Use goto to avoid invalidation and pushState
 		goto(`/?${params.toString()}`, {
 			replaceState: true,
-			invalidateAll: false
+			invalidateAll: false,
 		});
 	}
 </script>
@@ -23,20 +25,16 @@
 		role="search"
 		onsubmit={(e) => {
 			e.preventDefault(); // Svelte 5 removed piplines (workaround is there tho)
-			search(e.currentTarget.search.value, e.currentTarget.language.value);
+			search(e.currentTarget.search.value);
 		}}
 	>
-		<input class="wui" type="text" spellcheck="false" name="search" placeholder="Search..." />
-		<select class="wui" name="language">
-			<option value="de-de">German</option>
-			<option value="en-us">English</option>
-			<option value="es-us">Spanish</option>
-			<option value="fr-fr">French</option>
-			<option value="it-it">Italian</option>
-			<option value="ko-kr">Korean</option>
-			<option value="pt-br">Portuguese (Brazilian)</option>
-			<option value="zh-hk">Traditional Chinese (Hong Kong)</option>
-		</select>
+		<input
+			class="wui"
+			type="text"
+			spellcheck="false"
+			name="search"
+			placeholder="Search..."
+		/>
 		<button class="wui button" type="submit"> Search </button>
 	</form>
 </header>
@@ -44,16 +42,31 @@
 <main>
 	<ul class="graph">
 		{#await data.streamed}
-			<Loading />
+			<div class="middle">
+				<Loading size={42}/>
+			</div>
 		{:then feed}
-			{#each feed.items as item}
-				<li>
-					<article>
-						<h2>{item.title}</h2>
-						{@html item.description}
-					</article>
-				</li>
-			{/each}
+			<!-- Calculate the number of items per column -->
+			{#if feed.items.length > 0}
+				{@const columnCount = 3}
+				{@const itemsPerColumn = Math.ceil(feed.items.length / columnCount)}
+
+				<!-- Create three columns -->
+				{#each Array.from({ length: columnCount }) as _, i}
+					<div id={`column-${i + 1}`} class="column">
+						<!-- Distribute items to the current column -->
+						{#each feed.items.slice(i * itemsPerColumn, (i + 1) * itemsPerColumn) as item, j}
+							<!-- tabindex={(i * itemsPerColumn) + j}  -->
+							<Post post={item} />
+						{/each}
+					</div>
+				{/each}
+			{:else}
+				<div class="middle center" style="flex-direction: column;">
+					<span style="font-size: 2rem;">🤔</span>
+					<b>Nothing found</b>
+				</div>
+			{/if}
 		{:catch error}
 			<p>{error.message}</p>
 		{/await}
@@ -71,16 +84,38 @@
 
 	main {
 		--main-padding: 1rem;
-		padding: 0 var(--main-padding);
+		padding: 0 var(--main-padding) var(--main-padding) var(--main-padding);
+	}
+
+	div.column {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
+
+	.middle {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
 	}
 
 	.graph {
-		padding: 8px;
+		padding: 1rem;
 		display: grid;
 		gap: 1rem;
-		grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+		grid-template-columns: repeat(3, 1fr);
 		border-radius: var(--wui-radius);
 		min-height: calc(100dvh - var(--main-padding) - var(--wui-header-height));
 		box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 4px 2px inset;
+
+		/* NOTE: This does kinda break tab indexing... */
+		@media screen and (max-width: 1024px) {
+			grid-template-columns: repeat(2, 1fr);
+		}
+
+		@media screen and (max-width: 768px) {
+			grid-template-columns: 1fr;
+		}
 	}
 </style>

@@ -1,3 +1,8 @@
+/*=============================================================================
+// Copyright (c) 2024 - W2Wizard
+// See README in the root of this project for more information.
+==============================================================================*/
+
 body {
 	background-color: var(--wui-background);
 }
@@ -91,23 +96,4 @@ hr {
 	border-bottom: 2px solid var(--wui-border);
 	border-left: 2px solid var(--wui-border);
 	border-radius: var(--wui-radius);
-}
-
-article {
-	border: 1px solid var(--wui-border);
-	border-radius: var(--wui-radius);
-	background-color: var(--wui-shade-01);
-	box-shadow: var(--wui-box-shadow);
-	padding: 0.5rem;
-	width: fit-content;
-	height: fit-content;
-	min-width: 256px;
-	width: 100%;
-
-	& p {
-		overflow-x: hidden;
-    text-overflow: ellipsis;
-		max-height: 256px;
-		overflow-y: auto;
-	}
 }
