@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { goto } from "$app/navigation";
-	import Loading from "$lib/loading.svelte";
+	import IconGithub from "$lib/icons/icon-github.svelte";
+	import Loading from "$lib/icons/icon-loading.svelte";
 	import Post from "$lib/post.svelte";
 
 	const { data } = $props();
@@ -22,20 +23,37 @@
 
 <header>
 	<form
+		class="center"
 		role="search"
 		onsubmit={(e) => {
 			e.preventDefault(); // Svelte 5 removed piplines (workaround is there tho)
 			search(e.currentTarget.search.value);
 		}}
 	>
+		<a href="https://github.com/w2wizard" target="_blank" rel="noopener noreferrer">
+			<img
+				src="https://avatars.githubusercontent.com/u/63303990?v=4"
+				alt="Logo"
+				loading="lazy"
+				width="32"
+				height="32"
+			/>
+		</a>
 		<input
 			class="wui"
 			type="text"
 			spellcheck="false"
 			name="search"
-			placeholder="Search..."
+			placeholder="Search for feeds..."
 		/>
-		<button class="wui button" type="submit"> Search </button>
+		<menu>
+			<li>
+				<a href="https://github.com/w2wizard/flickrfeed" class="">
+					<IconGithub size={32} />
+				</a>
+			</li>
+		</menu>
+		<!--<button class="wui button" type="submit"> Search </button>-->
 	</form>
 </header>
 
@@ -91,6 +109,16 @@
 		display: flex;
 		flex-direction: column;
 		gap: 1rem;
+	}
+
+	form[role="search"] {
+		justify-content: space-between;
+
+		& input.wui[type="text"] {
+			width: 50%;
+			border: none;
+			box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 4px 2px inset;
+		}
 	}
 
 	.middle {

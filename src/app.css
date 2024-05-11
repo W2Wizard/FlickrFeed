@@ -6,7 +6,6 @@
 @import "./reset.css";
 @import "./components.css";
 
-/* Font */
 @font-face {
 	font-family: Geist;
 	src: url("/Geist.woff2") format("woff2");
@@ -25,6 +24,7 @@
 :root {
 	font-family:
 		Geist,
+		BebasNeue,
 		-apple-system,
 		BlinkMacSystemFont,
 		"Segoe UI",
@@ -46,7 +46,7 @@
 	--wui-text-05: hsl(240, 8%, 90%);
 
 	--wui-radius: 0.5rem;
-	--wui-header-height: 2rem;
+	--wui-header-height: 3rem;
 	--wui-border: hsl(0, 0%, 77%);
 
 	--wui-primary: hsla(16, 100%, 50%, 1);
