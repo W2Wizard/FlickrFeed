@@ -80,7 +80,7 @@
 					</div>
 				{/each}
 			{:else}
-				<div class="middle center" style="flex-direction: column;">
+				<div class="middle center" style="flex-direction: column; text-align: center;">
 					<span style="font-size: 2rem;">🤔</span>
 					<b>Nothing found</b>
 				</div>
@@ -113,11 +113,16 @@
 
 	form[role="search"] {
 		justify-content: space-between;
+		gap: 1rem;
 
 		& input.wui[type="text"] {
 			width: 50%;
 			border: none;
 			box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 4px 2px inset;
+
+			@media screen and (max-width: 768px) {
+				width: 100%;
+			}
 		}
 	}
 
@@ -132,6 +137,7 @@
 		padding: 1rem;
 		display: grid;
 		gap: 1rem;
+		position: relative;
 		grid-template-columns: repeat(3, 1fr);
 		border-radius: var(--wui-radius);
 		min-height: calc(100dvh - var(--main-padding) - var(--wui-header-height));
