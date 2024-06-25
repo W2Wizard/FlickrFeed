@@ -30,7 +30,7 @@
 			search(e.currentTarget.search.value);
 		}}
 	>
-		<a href="https://github.com/w2wizard" target="_blank" rel="noopener noreferrer">
+		<a href="https://portfolio.w2wizard.dev" target="_blank" rel="noopener noreferrer">
 			<img
 				src="https://avatars.githubusercontent.com/u/63303990?v=4"
 				alt="Logo"
